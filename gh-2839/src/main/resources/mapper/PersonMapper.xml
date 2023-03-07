@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.PersonMapper">
+
+  <sql id="Person$fields">
+      ${alias}.id       as ${prefix}id
+    , ${alias}.name     as ${prefix}name
+    ,<include refid="mapper.PersonGroupMapper.PersonGroup$fields">
+        <property name="alias" value="${alias}group"/>
+        <property name="prefix" value="${prefix}group_"/>
+    </include>
+  </sql>
+
+  <resultMap id="Person$ResultMap" type="test.Person">
+    <id property="id" column="id"/>
+    <result property="name" column="name"/>
+    <association property="group" resultMap="mapper.PersonGroupMapper.PersonGroup$ResultMap"/>
+  </resultMap>
+
+</mapper>

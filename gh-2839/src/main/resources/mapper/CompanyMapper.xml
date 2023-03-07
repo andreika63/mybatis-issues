@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.CompanyMapper">
+
+  <select id="query" resultMap="Company$ResultMap">
+    select
+    <include refid="Company$fields">
+        <property name="alias" value="com"/>
+        <property name="prefix" value="com_"/>
+    </include>
+    ,<include refid="mapper.PersonMapper.Person$fields">
+      <property name="alias" value="dir"/>
+      <property name="prefix" value="dir_"/>
+    </include>
+    from company com
+        left join person dir on dir.id = com.director_id
+        left join person_group dirgroup on dirgroup.id = dir.group_id
+  </select>
+
+  <sql id="Company$fields">
+      ${alias}.id   as ${prefix}id
+    , ${alias}.name as ${prefix}name
+  </sql>
+
+  <resultMap id="Company$ResultMap" type="test.Company">
+    <id property="id" column="com_id"/>
+    <result property="name" column="com_name"/>
+    <association property="director" resultMap="mapper.PersonMapper.Person$ResultMap" columnPrefix="dir_"/>
+  </resultMap>
+
+</mapper>
