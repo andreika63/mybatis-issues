@@ -13,7 +13,7 @@ create table person
 (
     id bigint,
     name varchar(255),
-    group_id bigint
+    group_id bigint not null
 );
 
 drop table person_group if exists;

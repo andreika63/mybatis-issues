@@ -6,6 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.junit.jupiter.SpringExtension
+import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 @ExtendWith(SpringExtension::class)
@@ -23,6 +24,9 @@ class SpringBootTest(@Autowired val companyMapper: CompanyMapper) {
             )
         }
         assertTrue { dtoList.size == 2 }
+
+        assertEquals("Group-11", dtoList[1].directorGroupName)
+
     }
 
 
